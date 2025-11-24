@@ -1,0 +1,11 @@
+# Flutter/Dart
+build/
+.dart_tool/
+.packages
+.pub/
+.idea/
+*.iml
+
+# Node / e2e
+node_modules/
+e2e/appium/node_modules/

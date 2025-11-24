@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run updated signup_mailslurp test",
+			"type": "shell",
+			"command": "$env:MAILSLURP_API_KEY=$env:MAILSLURP_API_KEY; $env:ANDROID_UDID=$env:ANDROID_UDID; npx wdio run wdio.conf.js --spec specs\\signup_mailslurp.e2e.js",
+			"group": "build"
+		}
+	]
+}
