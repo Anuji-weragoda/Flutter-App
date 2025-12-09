@@ -15,19 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Disable Flutter analytics (optional)
-      - name: Disable Flutter analytics
-        run: flutter config --no-analytics
-
-      # Setup Flutter
+      # Setup Flutter first
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0' # set your Flutter version
+          flutter-version: '3.13.0'  # your Flutter version
 
-      # Go into the project folder
-      - name: Go to project folder
-        run: cd mobile_frontend
+      # Disable Flutter analytics (after Flutter is installed)
+      - name: Disable Flutter analytics
+        run: flutter config --no-analytics
 
       # Install dependencies
       - name: Install dependencies
