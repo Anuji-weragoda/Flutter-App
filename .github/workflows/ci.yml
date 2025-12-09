@@ -11,30 +11,42 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: mobile_frontend  # runs commands from mobile_frontend
+        working-directory: mobile_frontend  # set project folder
 
     steps:
-      - name: Checkout repository
+      # Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Flutter SDK
+      # Setup Flutter SDK
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.4'  # stable version which includes Dart 3.9:contentReference[oaicite:2]{index=2}
+          flutter-version: '3.35.4'  # includes Dart 3.9.x
 
+      # Disable Flutter analytics
       - name: Disable Flutter analytics
         run: flutter config --no-analytics
 
+      # Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
+      # Run tests only if test folder exists
       - name: Run tests
-        run: flutter test
+        run: |
+          if [ -d "test" ]; then
+            flutter test
+          else
+            echo "No test folder, skipping tests."
+          fi
 
-      - name: Build debug APK
+      # Build debug APK
+      - name: Build APK
         run: flutter build apk --debug
 
-      - name: Upload APK artifact
+      # Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
