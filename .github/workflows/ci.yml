@@ -10,42 +10,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: mobile_frontend  # set project folder as default
+
     steps:
-      # Checkout code
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Flutter first
+      # Setup Flutter (3.13.x includes Dart 3.9.x)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'  # your Flutter version
+          flutter-version: '3.13.0'
 
-      # Disable Flutter analytics (after Flutter is installed)
+      # Disable Flutter analytics
       - name: Disable Flutter analytics
         run: flutter config --no-analytics
 
       # Install dependencies
       - name: Install dependencies
-        run: |
-          cd mobile_frontend
-          flutter pub get
+        run: flutter pub get
 
       # Run tests
       - name: Run tests
-        run: |
-          cd mobile_frontend
-          flutter test
+        run: flutter test
 
-      # Build APK
+      # Build debug APK
       - name: Build APK
-        run: |
-          cd mobile_frontend
-          flutter build apk --debug
+        run: flutter build apk --debug
 
-      # Upload APK
+      # Upload APK as artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: mobile_frontend/build/app/outputs/flutter-apk/app-debug.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
